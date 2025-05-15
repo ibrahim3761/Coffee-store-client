@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router";
 import Swal from "sweetalert2";
 
 const AddCoffee = () => {
@@ -30,6 +31,13 @@ const AddCoffee = () => {
   };
   return (
     <div className="p-24">
+        {/* Back to Home */}
+      <Link
+        to="/"
+        className="text-lg font-semibold text-[#374151] hover:underline mb-6 inline-block"
+      >
+        ← Back to home
+      </Link>
       <div className="p-12 text-center space-y-4">
         <h1 className="text-6xl">Add Coffee</h1>
         <p>
@@ -39,74 +47,90 @@ const AddCoffee = () => {
           letters, as opposed to using Content here.
         </p>
       </div>
-      <form onSubmit={handleAddCoffee}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <fieldset className="fieldset bg-base-200 border-base-300 rounded-box  border p-4">
-            <label className="label">Name</label>
+      <form
+          onSubmit={handleAddCoffee}
+          className="grid grid-cols-1 md:grid-cols-2 gap-4"
+        >
+          {/* Left Column Inputs */}
+          <div className="flex flex-col">
+            <label className="font-semibold mb-1">Name</label>
             <input
               type="text"
               name="name"
-              className="input w-full"
               placeholder="Enter coffee name"
+              className="p-2 rounded border"
             />
-          </fieldset>
-          <fieldset className="fieldset bg-base-200 border-base-300 rounded-box  border p-4">
-            <label className="label">Quantity</label>
+          </div>
+
+          <div className="flex flex-col">
+            <label className="font-semibold mb-1">Quantity</label>
             <input
-              type="number"
+              type="text"
               name="quantity"
-              className="input w-full"
-              placeholder="Enter coffee quantity"
+              placeholder="Enter chef name"
+              className="p-2 rounded border"
             />
-          </fieldset>
-          <fieldset className="fieldset bg-base-200 border-base-300 rounded-box  border p-4">
-            <label className="label">Supplier</label>
+          </div>
+
+          <div className="flex flex-col">
+            <label className="font-semibold mb-1">Supplier</label>
             <input
               type="text"
               name="supplier"
-              className="input w-full"
-              placeholder="Enter coffee supplier"
+              placeholder="Enter supplier name"
+              className="p-2 rounded border"
             />
-          </fieldset>
-          <fieldset className="fieldset bg-base-200 border-base-300 rounded-box  border p-4">
-            <label className="label">Taste</label>
+          </div>
+
+          <div className="flex flex-col">
+            <label className="font-semibold mb-1">Taste</label>
             <input
               type="text"
               name="taste"
-              className="input w-full"
               placeholder="Enter coffee taste"
+              className="p-2 rounded border"
             />
-          </fieldset>
-          <fieldset className="fieldset bg-base-200 border-base-300 rounded-box  border p-4">
-            <label className="label">Price</label>
+          </div>
+
+          <div className="flex flex-col">
+            <label className="font-semibold mb-1">Price</label>
             <input
-              type="number"
+              type="text"
               name="price"
-              className="input w-full"
-              placeholder="Enter coffee Price"
+              placeholder="Enter category"
+              className="p-2 rounded border"
             />
-          </fieldset>
-          <fieldset className="fieldset bg-base-200 border-base-300 rounded-box  border p-4">
-            <label className="label">Details</label>
+          </div>
+
+          <div className="flex flex-col">
+            <label className="font-semibold mb-1">Details</label>
             <input
               type="text"
               name="details"
-              className="input w-full"
               placeholder="Enter coffee details"
+              className="p-2 rounded border"
             />
-          </fieldset>
-        </div>
-        <fieldset className="fieldset bg-base-200 border-base-300 rounded-box my-4 border p-4">
-          <label className="label">Photo URL</label>
-          <input
-            type="text"
-            name="photo"
-            className="input w-full"
-            placeholder="Enter coffee photo url"
-          />
-        </fieldset>
-        <input type="submit" className="btn w-full" value="Add Coffee" />
-      </form>
+          </div>
+
+          <div className="md:col-span-2 flex flex-col">
+            <label className="font-semibold mb-1">Photo</label>
+            <input
+              type="text"
+              name="photo"
+              placeholder="Enter photo URL"
+              className="p-2 rounded border"
+            />
+          </div>
+
+          <div className="md:col-span-2 text-center mt-4">
+            <button
+              type="submit"
+              className="bg-[#D2B48C] hover:bg-[#b6976c] text-white font-bold py-2 px-6 rounded transition"
+            >
+              Add Coffee
+            </button>
+          </div>
+        </form>
     </div>
   );
 };
