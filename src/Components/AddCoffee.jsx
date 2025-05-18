@@ -10,7 +10,7 @@ const AddCoffee = () => {
     console.log(newCoffee);
 
     // send data to db
-    fetch("http://localhost:3000/coffees", {
+    fetch("https://coffee-store-server-eight-pink.vercel.app/coffees", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -67,7 +67,7 @@ const AddCoffee = () => {
             <input
               type="text"
               name="quantity"
-              placeholder="Enter chef name"
+              placeholder="Enter coffee quantity"
               className="p-2 rounded border"
             />
           </div>

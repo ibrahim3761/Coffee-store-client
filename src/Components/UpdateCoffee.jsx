@@ -11,7 +11,7 @@ const UpdateCoffee = () => {
     const updatedCoffee = Object.fromEntries(new FormData(form));
     console.log(updatedCoffee);
     // send updatedCoffe to DB
-    fetch(`http://localhost:3000/coffees/${_id}`, {
+    fetch(`https://coffee-store-server-eight-pink.vercel.app/coffees/${_id}`, {
         method: "PUT",
         headers:{
             "Content-Type" : "application/json"
@@ -75,7 +75,7 @@ const UpdateCoffee = () => {
               type="text"
               name="quantity"
               defaultValue={quantity}
-              placeholder="Enter chef name"
+              placeholder="Enter coffee quantity"
               className="p-2 rounded border"
             />
           </div>
