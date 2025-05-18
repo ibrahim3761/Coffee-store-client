@@ -1,42 +1,63 @@
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import { useLoaderData } from "react-router";
 import Swal from "sweetalert2";
+import { AuthContext } from "../Context/AuthContext";
 
 const Users = () => {
   const initialUsers = useLoaderData();
   const [users, setUsers] = useState(initialUsers);
+  const { currentUser, DeleteUser } = use(AuthContext)
 
-  const handleDelete = (id) =>{
+  const handleDelete = (id, email) => {
+  if (!currentUser || currentUser.email !== email) {
     Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        // send delete request to server
-        fetch(`http://localhost:3000/users/${id}`, {
-          method: "DELETE",
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            if (data.deletedCount) {
-              Swal.fire({
-                title: "Deleted!",
-                text: "Your user has been deleted.",
-                icon: "success",
+      icon: "error",
+      title: "Access Denied",
+      text: "You can only delete your own account.",
+    });
+    return;
+  }
+
+  Swal.fire({
+    title: "Are you sure?",
+    text: "You won't be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // send delete request to server
+      fetch(`http://localhost:3000/users/${id}`, {
+        method: "DELETE",
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.deletedCount) {
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your user has been deleted.",
+              icon: "success",
+            });
+
+            const remainingUsers = users.filter((user) => user._id !== id);
+            setUsers(remainingUsers);
+
+            // Keep this as you requested
+            DeleteUser(currentUser)
+              .then(() => {
+                console.log("User deleted from firebase");
+              })
+              .catch((error) => {
+                console.log("Error deleting user from firebase", error);
               });
-              const remainingUsers = users.filter((user) => user._id !== id);
-              setUsers(remainingUsers);
-            }
-          });
-      }
+          }
+        });
     }
-    );
-  };
+  });
+};
+
 
 
   return (
@@ -89,7 +110,7 @@ const Users = () => {
               <th className="flex gap-2">
                 <button className="btn btn-ghost btn-xs">V</button>
                 <button className="btn btn-ghost btn-xs">E</button>
-                <button onClick={()=>handleDelete(user._id)} className="btn btn-ghost btn-xs">X</button>
+                <button onClick={()=>handleDelete(user._id,user.email)} className="btn btn-ghost btn-xs">X</button>
               </th>
             </tr>)
             }
